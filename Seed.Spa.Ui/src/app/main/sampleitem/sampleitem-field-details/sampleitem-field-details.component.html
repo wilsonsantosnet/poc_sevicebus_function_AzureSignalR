@@ -1,0 +1,14 @@
+﻿<dl>
+    <dt>{{ vm.infos | traduction: 'value' }}:</dt>
+    <dd><bind-custom [model]="vm.details.value" [format]="'string'" [tag]="'span'" ></bind-custom></dd>
+ 
+
+    <dt>{{ vm.infos | traduction: 'sampleItemId' }}:</dt>
+    <dd><bind-custom [model]="vm.details.sampleItemId" [format]="'int'" [tag]="'span'" ></bind-custom></dd>
+ 
+
+    <dt>{{ vm.infos | traduction: 'sampleId' }}:</dt>
+    <dd><bind-custom [model]="vm.details.sampleId" [format]="'instance'" [tag]="'span'"  [instance]="'Sample'"  [key]="'SampleId'"></bind-custom></dd>
+ 
+
+</dl> 

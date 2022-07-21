@@ -1,0 +1,66 @@
+﻿<div class="row " [formGroup]="vm.form">
+  <section class="col-md-12"  >
+    <div class='form-group'>
+      <label>{{ vm.infos | traduction:'name' }}</label>
+      <input type='text' class='form-control' [(ngModel)]='vm.model.name' name='name' required formControlName='name'    maxlength=50 autocomplete='off'/>
+    </div>
+  </section>
+
+  <section class="col-md-12"  >
+    <div class='form-group'>
+              <label>{{ vm.infos | traduction:'descricao' }}</label>
+              <editor [(ngModel)]='vm.model.descricao' name='descricao'  formControlName='descricao'[init] = "{ plugins: 'lists link image table code help wordcount' }" apiKey=w0yc6uopropgykx3pj1g5ehupy206vtq08u10xfnnl15gwno>
+              </editor>
+            </div>
+  </section>
+
+  <section class="col-md-12"  >
+    <div class='form-group'>
+      <label>{{ vm.infos | traduction:'tags' }}</label>
+      <textarea class='form-control'  [(ngModel)]='vm.model.tags' name='tags'  rows='5' formControlName='tags' ></textarea>
+    </div>
+  </section>
+
+  <section class="col-md-12"  >
+    <upload-custom [(vm)]='vm' [ctrlName]='"filePath"' [label]='vm.infos | traduction:"filePath"' [folder]='"sample"'></upload-custom>
+  </section>
+
+  <section class="col-md-12"  >
+    <div class='form-group'>
+      <label>{{ vm.infos | traduction:'datetime' }}</label>
+      <input type='datetime-local' class='form-control' [(ngModel)]='vm.model.datetime' name='datetime'  formControlName='datetime'  autocomplete='off'/>
+    </div>
+  </section>
+
+  <section class="col-md-12"   *ngIf="!vm.isParent || vm.ParentIdField != 'sampleTypeId'">
+    <div class='form-group'>
+      <label class='mr-1'>{{ vm.infos | traduction:'sampleTypeId' }}</label> 
+        <select class='form-control'  name='sampleTypeId' [(ngModel)]='vm.model.sampleTypeId' required formControlName='sampleTypeId' datasource [dataitem]="'SampleType'" [fieldFilterName]="'Name'" [enabledSelect2]=false  ></select>
+      </div>
+        
+  </section>
+
+  <section class="col-md-12"  >
+    <div class='form-group'>
+      <label>{{ vm.infos | traduction:'age' }}</label>
+      <input type='text' class='form-control' [(ngModel)]='vm.model.age' name='age'  formControlName='age'  maski='9999999999'  autocomplete='off'/>
+    </div>
+  </section>
+
+  <section class="col-md-12"  >
+    <div class='form-group'>
+      <label>{{ vm.infos | traduction:'category' }}</label>
+      <input type='text' class='form-control' [(ngModel)]='vm.model.category' name='category'  formControlName='category'  maski='9999999999'  autocomplete='off'/>
+    </div>
+  </section>
+
+  <section class="col-md-12"  >
+    <div class='checkbox pt-4'>
+      <label>
+          <input type='checkbox'  [(ngModel)]='vm.model.ativo'  name='ativo' formControlName='ativo'  /> {{ vm.infos | traduction:"ativo" }}?
+      </label>
+    </div>
+  </section>
+
+</div>
+

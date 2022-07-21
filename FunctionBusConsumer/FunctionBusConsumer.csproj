@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<AzureFunctionsVersion>v4</AzureFunctionsVersion>
+		<UserSecretsId>f563ad9f-40eb-457b-ae4b-2577f9af9e19</UserSecretsId>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="5.5.1" />
+		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.SignalRService" Version="1.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />
+		<PackageReference Include="AutoMapper" Version="11.0.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Common.API\Common.API.csproj" />
+		<ProjectReference Include="..\Common.Bus\Common.Bus.csproj" />
+		<ProjectReference Include="..\Common.Cache\Common.Cache.csproj" />
+		<ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
+		<ProjectReference Include="..\Common.Dto\Common.Dto.csproj" />
+		<ProjectReference Include="..\Seed.Application\Seed.Application.csproj" />
+		<ProjectReference Include="..\Seed.CrossCuting\Seed.CrossCuting.csproj" />
+		<ProjectReference Include="..\Seed.CrossCuting.Auth\Seed.CrossCuting.Auth.csproj" />
+		<ProjectReference Include="..\Seed.Data\Seed.Data.csproj" />
+		<ProjectReference Include="..\Seed.Domain.Filter\Seed.Domain.Filter.csproj" />
+		<ProjectReference Include="..\Seed.Domain\Seed.Domain.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="host.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="local.settings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+</Project>
