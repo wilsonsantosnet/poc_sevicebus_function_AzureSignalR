@@ -7,8 +7,6 @@ namespace Seed.Dto
 {
 	public class SampleTypeDtoSpecialized : SampleTypeDto
 	{
-
-
-		
-	}
+        public string UserId { get; set; }
+    }
 }

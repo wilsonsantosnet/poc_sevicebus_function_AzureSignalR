@@ -34,19 +34,21 @@ namespace FunctionBusConsumer
             log.LogInformation($"DeliveryCount={deliveryCount}");
             log.LogInformation($"MessageId={messageId}");
 
-            var dto = System.Text.Json.JsonSerializer.Deserialize<SampleTypeDtoSpecialized>(myQueueItem, new System.Text.Json.JsonSerializerOptions
+            var message= System.Text.Json.JsonSerializer.Deserialize<SampleTypeDtoSpecialized>(myQueueItem, new System.Text.Json.JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
-            var returnModel = this._app.Save(dto).Result;
+            
+            var returnModel = this._app.Save(message).Result;
 
 
             return signalRMessages.AddAsync(
                 new SignalRMessage
                 {
+                    UserId = message.UserId,
                     Target = "ClientNotificationMethod",
                     Arguments = new[] { "SampleType", "SampleType processado com Sucesso." }
-});
+                });
 
         }
     }

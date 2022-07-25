@@ -1,8 +1,9 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, IHttpConnectionOptions } from '@aspnet/signalr';
 //import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { NotificationsService } from 'angular2-notifications';
 import { GlobalService } from '../../global.service';
+import { CacheService } from './cache.service';
 
 @Injectable()
 export class SignalRService {
@@ -11,7 +12,7 @@ export class SignalRService {
   @Output() connectionEstablished: EventEmitter<any> = new EventEmitter();
 
   private _hubConnection: HubConnection;
-  private _baseUrl: string 
+  private _baseUrl: string
 
   constructor(private notificationsService: NotificationsService) {
     //this._baseUrl = GlobalService.getEndPoints().DEFAULT + "/notification"
@@ -22,15 +23,22 @@ export class SignalRService {
     this.startConnection();
   }
 
+  private getUserId() {
+    let user = JSON.parse(localStorage.getItem("CURRENT_USERSeed-spa"));
+    return user['email'];
+  }
+
   private createConnection() {
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl(this._baseUrl)
+      .withUrl(`${this._baseUrl}?userId=${this.getUserId()}`)
       .build();
   }
 
   private registerOnServerEvents() {
     this._hubConnection
-      .on('ClientNotificationMethod', (user,message) => {
+      .on('ClientNotificationMethod', (user, message) => {
+
+        console.log(user)
 
         this.notificationsService.success(
           'Sucesso',
@@ -47,8 +55,7 @@ export class SignalRService {
   }
 
   private startConnection(): void {
-    this._hubConnection
-      .start()
+    this._hubConnection.start()
       .then(() => {
         console.log('Hub de conexão iniciado');
         this.connectionEstablished.emit(true);

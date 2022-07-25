@@ -7,7 +7,7 @@
     "HubCns": "Endpoint=https://hubseed.service.signalr.net;AccessKey=dGzRwhvMIKaa5xr97d0745LPyPVu/Gp7C1T2YKmCbDw=;Version=1.0;"
   },
   "ConfigConnectionString": {
-    "Default": "server=(localdb)\\mssqllocaldb;database=Sample.Seed;trusted_connection=yes"
+    "Default": "server=LAPTOP-N0CDKSRP\\SQLEXPRESS;database=Sample.Seed;trusted_connection=yes"
   },
   "ConfigSettings": {
     "EnabledCache": false,

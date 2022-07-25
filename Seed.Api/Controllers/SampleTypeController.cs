@@ -12,6 +12,7 @@ using Seed.CrossCuting;
 using System;
 using Common.Domain.Interfaces;
 using Common.Bus;
+using Common.Domain.Model;
 
 namespace Seed.Api.Controllers
 {
@@ -21,12 +22,15 @@ namespace Seed.Api.Controllers
     {
         private IBus _bus;
         private NotificationHub _not;
-        public SampleTypeController(IBus bus,NotificationHub not, ISampleTypeApplicationService app, ILoggerFactory logger, IWebHostEnvironment env)
+        private readonly CurrentUser _user;
+
+        public SampleTypeController(IBus bus,NotificationHub not, CurrentUser user, ISampleTypeApplicationService app, ILoggerFactory logger, IWebHostEnvironment env)
             : base(app, logger, env, new ErrorMapCustom())
         {
 
             _bus = bus;
             _not = not;
+            _user = user;
         }
 
         [Authorize(Policy = "CanReadAll")]
@@ -53,6 +57,8 @@ namespace Seed.Api.Controllers
             var result = new HttpResult<SampleTypeDtoSpecialized>(this._logger, this._err);
             try
             {
+                dto.UserId = _user.GetClaimByName<string>("email");
+
                 await this._bus.SendMessage(dto, "SampleType");
                 //await _not.SendMessage("SampleType", "SampleType inserido com sucesso");
                 return result.ReturnCustomResponse(this._app, dto);
