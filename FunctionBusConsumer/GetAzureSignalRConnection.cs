@@ -12,7 +12,6 @@ namespace FunctionBusConsumer
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             [SignalRConnectionInfo(HubName = "notification", UserId = "{query.userId}", ConnectionStringSetting = "HubCns")] SignalRConnectionInfo connectionInfo)
         {
-            
             return connectionInfo;
         }
     }

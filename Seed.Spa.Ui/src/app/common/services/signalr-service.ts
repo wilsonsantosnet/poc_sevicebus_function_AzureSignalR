@@ -3,6 +3,7 @@ import { HubConnection, HubConnectionBuilder, IHttpConnectionOptions } from '@as
 //import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { NotificationsService } from 'angular2-notifications';
 import { GlobalService } from '../../global.service';
+import { AuthService } from './auth.service';
 import { CacheService } from './cache.service';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class SignalRService {
   private _hubConnection: HubConnection;
   private _baseUrl: string
 
-  constructor(private notificationsService: NotificationsService) {
+  constructor(private notificationsService: NotificationsService, private auth: AuthService) {
     //this._baseUrl = GlobalService.getEndPoints().DEFAULT + "/notification"
     this._baseUrl = "http://localhost:7071/api";
 
@@ -24,8 +25,8 @@ export class SignalRService {
   }
 
   private getUserId() {
-    let user = JSON.parse(localStorage.getItem("CURRENT_USERSeed-spa"));
-    return user['email'];
+    let user = this.auth.currentUser();;
+    return user.claims['email'];
   }
 
   private createConnection() {
