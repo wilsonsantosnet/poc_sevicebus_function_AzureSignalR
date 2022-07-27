@@ -32,6 +32,7 @@ export class ApiService<T> {
   }
 
   public get(filters?: any, onlyDataResult?: boolean): Observable<T> {
+    console.log("get", filters);
     return this.getBase(this.makeBaseUrl(), filters);
   }
 
@@ -392,7 +393,7 @@ export class ApiService<T> {
   }
 
   private makeSearchParams(filters?: any): HttpParams {
-    const params = new HttpParams();
+    let params = new HttpParams();
     if (filters != null) {
       for (const key in filters) {
 
@@ -400,16 +401,20 @@ export class ApiService<T> {
           if (filters[key]) {
             let values = filters[key].toString().split(",");
             for (let value in values) {
-              params.append(key, values[value]);
+              params = params.append(key, values[value]);
             }
           }
         }
         else if (filters.hasOwnProperty(key)) {
-          params.set(key, filters[key]);
+          console.log("makeSearchParams", key, filters[key],"1")
+          params = params.append(key, filters[key]);
         }
+        else {
+          console.log("makeSearchParams", key, filters[key], "2")
+        } 
       }
     }
-
+    console.log("params", params);
     return params;
   }
 

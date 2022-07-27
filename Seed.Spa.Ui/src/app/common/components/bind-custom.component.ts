@@ -17,7 +17,7 @@ declare var $: any;
     `,
   providers: [DatePipe, DecimalPipe, PercentPipe, CurrencyPipe, MaskFormatPipe, ApiService],
 })
-export class BindCustomComponent implements OnInit {
+export class BindCustomComponent implements OnInit, OnChanges {
 
   value: any;
   badge: boolean;
@@ -45,7 +45,7 @@ export class BindCustomComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.changes();
+   
   }
 
 
@@ -118,11 +118,11 @@ export class BindCustomComponent implements OnInit {
 
   }
 
-  //ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
 
-    
+    this.changes();
 
-  //}
+  }
 
   public convertNumber(value: any) {
     if (value) {

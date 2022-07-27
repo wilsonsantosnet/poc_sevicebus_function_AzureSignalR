@@ -19,6 +19,7 @@ namespace FunctionBusConsumer
 
 
         [FunctionName("ProcessBusMessage")]
+        [ExponentialBackoffRetry(5, "00:00:04", "00:15:00")]
         public Task Run(
         [ServiceBusTrigger("SampleType", Connection = "BusCns")]
         string myQueueItem,

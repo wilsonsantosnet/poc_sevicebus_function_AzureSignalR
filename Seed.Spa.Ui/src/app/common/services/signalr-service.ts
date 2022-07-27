@@ -2,7 +2,7 @@ import { Injectable, EventEmitter, Output } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, IHttpConnectionOptions } from '@aspnet/signalr';
 //import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { NotificationsService } from 'angular2-notifications';
-import { GlobalService } from '../../global.service';
+import { GlobalService, NotificationParameters } from '../../global.service';
 import { AuthService } from './auth.service';
 import { CacheService } from './cache.service';
 
@@ -18,6 +18,8 @@ export class SignalRService {
   constructor(private notificationsService: NotificationsService, private auth: AuthService) {
     //this._baseUrl = GlobalService.getEndPoints().DEFAULT + "/notification"
     this._baseUrl = "http://localhost:7071/api";
+    //this._baseUrl = "https://seed-func.azurewebsites.net/api";
+    
 
     this.createConnection();
     this.registerOnServerEvents();
@@ -25,8 +27,11 @@ export class SignalRService {
   }
 
   private getUserId() {
-    let user = this.auth.currentUser();;
-    return user.claims['email'];
+    let user = this.auth.currentUser();
+    console.log("getUserId()", user);
+    if (user.claims)
+      return user.claims.email;
+
   }
 
   private createConnection() {
@@ -39,7 +44,7 @@ export class SignalRService {
     this._hubConnection
       .on('ClientNotificationMethod', (user, message) => {
 
-        console.log(user)
+        console.log("ClientNotificationMethod",user)
 
         this.notificationsService.success(
           'Sucesso',
@@ -52,6 +57,7 @@ export class SignalRService {
           }
         )
         this.notificationReceived.emit(message);
+        GlobalService.getNotificationEmitter().emit(new NotificationParameters("signalR", {data:"sampleType"}))
       });
   }
 

@@ -52,15 +52,20 @@ namespace Seed.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SampleTypeDtoSpecialized dto)
         {
+            //01
+            //return await base.Post(dto, "Seed - SampleType");
 
+            //02
+            //await _not.SendMessage("SampleType", "SampleType inserido com sucesso");
+            //return await base.Post(dto, "Seed - SampleType");
 
+            //03
             var result = new HttpResult<SampleTypeDtoSpecialized>(this._logger, this._err);
             try
             {
                 dto.UserId = _user.GetClaimByName<string>("email");
-
                 await this._bus.SendMessage(dto, "SampleType");
-                //await _not.SendMessage("SampleType", "SampleType inserido com sucesso");
+
                 return result.ReturnCustomResponse(this._app, dto);
 
             }
@@ -69,9 +74,6 @@ namespace Seed.Api.Controllers
                 var responseEx = result.ReturnCustomException(ex, "Seed - SampleType", dto);
                 return responseEx;
             }
-
-            //await _not.SendMessage("SampleType", "SampleType inserido com sucesso");
-            //return await base.Post(dto, "Seed - SampleType");
 
         }
 

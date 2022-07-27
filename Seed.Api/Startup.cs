@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -109,6 +110,11 @@ namespace Seed.Api
             services.AddSignalR()
                     .AddAzureSignalR("Endpoint=https://hubseed.service.signalr.net;AccessKey=dGzRwhvMIKaa5xr97d0745LPyPVu/Gp7C1T2YKmCbDw=;Version=1.0;");
 
+            services.AddApplicationInsightsTelemetry();
+            services.AddAzureClients(builder =>
+            {
+                builder.AddServiceBusClient(Configuration.GetSection("ConfigBus:DefaultCns"));
+            });
 
         }
 

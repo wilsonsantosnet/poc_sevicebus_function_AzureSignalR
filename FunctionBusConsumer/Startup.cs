@@ -38,7 +38,8 @@ namespace FunctionBusConsumer
 
             builder.Services.AddDbContext<DbContextSeed>(
                 options => options
-                .UseSqlServer(Configuration.GetSection("ConfigConnectionString:Default").Value));
+                //.UseSqlServer(Configuration.GetSection("ConfigConnectionString:Default").Value));
+                .UseSqlServer(Configuration.GetConnectionString("default")));
 
             builder.Services.AddHttpClient();
 
